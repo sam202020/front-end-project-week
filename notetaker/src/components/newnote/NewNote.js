@@ -3,7 +3,7 @@ import { Container, Row, Col, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './newnote.css';
 import { Redirect } from 'react-router';
-import fire from './fire.js';
+import axios from 'axios';
 
 export default class NewNote extends Component {
 
@@ -23,16 +23,17 @@ export default class NewNote extends Component {
 
     submitHandler = e => {
         e.preventDefault();
-        // firebase:
-        const notesRef = fire.database().ref('notes');
-        const note = {
-            title: this.state.newNoteTitle,
-            body: this.state.newNoteBody,
-          }
-        notesRef.push(note);
-        this.setState({
-            redirect: true
-        })
+        axios
+            .post('http://localhost:5000/api/notes', 
+            { "title": this.state.newNoteTitle, "body": this.state.newNoteBody })
+            .then(response => {
+                this.setState({
+                    redirect: true
+                })
+            })
+            .catch(error => {
+                console.error('Server Error', error);
+            });
     }
 
     render() {
