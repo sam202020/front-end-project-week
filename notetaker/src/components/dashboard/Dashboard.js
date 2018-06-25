@@ -3,7 +3,7 @@ import { Container, Row, Col, } from 'reactstrap';
 import './dashboard.css';
 import { Link } from 'react-router-dom';
 import Note from './Note';
-import fire from '../../components/newnote/fire.js';
+import axios from 'axios';
 
 export default class Dashboard extends Component {
     
@@ -14,22 +14,17 @@ export default class Dashboard extends Component {
       };
   }
 
-  componentDidMount() {
-    const notesRef = fire.database().ref('notes');
-    notesRef.on('value', (snapshot) => {
-      let notes = snapshot.val();
-      let newState = [];
-      for (let note in notes) {
-          newState.push({
-          title: notes[note].title,
-          body: notes[note].body,
-          id: note
-          });
-      }
-      this.setState({
-          notes: newState
-      });  
-    }); 
+  componentWillMount() {
+    axios
+      .get('http://localhost:5000/api/notes')
+      .then(response => {
+        this.setState({ notes: response.data });
+        console.log(response.data);
+        console.log(this.state.notes);
+      })
+      .catch(error => {
+        console.error('Server Error', error);
+      });
   }
 
   render() {
@@ -54,10 +49,10 @@ export default class Dashboard extends Component {
                         </Row>
                         <Row className="mb-4">
                         {this.state.notes.map(note =>
-                            <Col xs="4" className="mb-4" key={note.id}>
+                            <Col xs="4" className="mb-4" key={note._id}>
                             <Note
-                            key={note.id} 
-                            id={note.id}
+                            key={note._id} 
+                            id={note._id}
                             title={note.title}
                             body={note.body}
                              />
