@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import fire from '../../components/newnote/fire.js';
+import axios from 'axios';
 import { Redirect } from 'react-router';
 
 export default class EditNote extends Component {
@@ -22,14 +22,17 @@ export default class EditNote extends Component {
 
     editNote = e => {    
       e.preventDefault(); 
-      const notesRef = fire.database().ref(`/notes/${this.props.location.state.id.id}`);
-      notesRef.set({
-          title: this.state.newTitle,
-          body: this.state.newBody
-      });
-      this.setState({
-          redirect: true
-      })
+      axios
+        .put(`http://localhost:5000/api/notes/${this.props.location.state.id.id}`, 
+            { "title": this.state.newTitle, "body": this.state.newBody })
+        .then(response => {
+            this.setState({
+                redirect: true
+            })
+        })
+        .catch(error => {
+            console.error('Server Error', error);
+        });
     }
 
   render() {
