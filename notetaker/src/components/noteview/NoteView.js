@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Modal, ModalBody, ModalFooter  } from 'rea
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import './noteview.css';
-import fire from '../../components/newnote/fire.js';
+import axios from 'axios';
 
 export default class NoteView extends Component {
   constructor(props) {
@@ -24,11 +24,16 @@ export default class NoteView extends Component {
 
   removeNote = e => {    
     e.preventDefault(); 
-    const notesRef = fire.database().ref(`/notes/${this.props.location.state.id}`);
-    notesRef.remove();
-    this.setState({
-        redirect: true
-    })
+    axios
+      .delete(`http://localhost:5000/api/notes/${this.props.location.state.id}`)
+      .then(response => {
+        this.setState({
+            redirect: true
+        })
+      })
+      .catch(error => {
+        console.error('Server Error', error);
+      });
   }
 
   render() {
