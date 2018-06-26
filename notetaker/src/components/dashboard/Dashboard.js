@@ -37,7 +37,8 @@ export default class Dashboard extends Component {
     )
     return (
         <div>
-            <Link to='/login'>Login To Another Account</Link>
+            <Link to='/login'>Login To Another Account</Link><br></br>
+            <Link to='/signup'>New User</Link>
             <Container className="container">
                 <Row className="border">
                     <Col xs="3" className="sidebar">
