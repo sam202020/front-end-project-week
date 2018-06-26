@@ -14,22 +14,30 @@ export default class Dashboard extends Component {
       };
   }
 
-  componentWillMount() {
-    axios
-      .get('http://localhost:5000/api/notes')
-      .then(response => {
-        this.setState({ notes: response.data });
-        console.log(response.data);
-        console.log(this.state.notes);
-      })
-      .catch(error => {
-        console.error('Server Error', error);
-      });
+  componentDidMount() {
+    if (this.props.location.state) {
+        axios
+        .get(`http://localhost:5000/api/notes/${this.props.location.state.userID}`)
+        .then(response => {
+            this.setState({ notes: response.data });
+            console.log(this.props.location.state.userID);
+        })
+        .catch(error => {
+            console.error('Server Error', error);
+        });
+    }
   }
 
   render() {
+    if (!this.props.location.state) return (
+        <div>
+            Please Sign In:<br></br>
+            <Link to='/signup'>New User</Link>
+        </div>
+    )
     return (
         <div>
+            <Link to='/signup'>New User</Link>
             <Container className="container">
                 <Row className="border">
                     <Col xs="3" className="sidebar">
@@ -37,7 +45,10 @@ export default class Dashboard extends Component {
                         <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
                             View Your Notes
                         </button>
-                        <Link to="/create" className="create-link">
+                        <Link to={{
+                            pathname: "/create",
+                            state: { userID: this.props.location.state.userID }
+                        }}>
                             <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
                                 + Create New Note
                             </button>

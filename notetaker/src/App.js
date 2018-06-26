@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import NewNote from './components/newnote/NewNote';
 import NoteView from './components/noteview/NoteView';
 import EditNote from './components/editnote/EditNote';
+import Registration from './components/registration/Registration';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
       <div className="App">
         <Route exact path="/" component={ Dashboard }/>
         <Route path="/create" component={ NewNote }/>
+        <Route path="/signup" component={ Registration }/>
         <Route path="/note/:id" component={ NoteView }/>
         <Route path="/edit/:id" component={ EditNote }/>
       </div>

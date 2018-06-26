@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import './newnote.css';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 
-export default class NewNote extends Component {
+export default class Registration extends Component {
 
     constructor(props) {
         super(props);
@@ -25,16 +24,15 @@ export default class NewNote extends Component {
     submitHandler = e => {
         e.preventDefault();
         axios
-            .post('http://localhost:5000/api/notes', 
-                { "title": this.state.newNoteTitle, 
-                  "body": this.state.newNoteBody, 
-                  "user": this.props.location.state.userID 
-                })
-            .then(response => {
+            .post('http://localhost:5000/api/users', 
+            { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
+            .then(res => {
                 this.setState({
-                    userID: this.props.location.state.userID,
+                    userID: res.data._id,
                     redirect: true
                 })
+                console.log(res);
+                console.log(this.state.userID);
             })
             .catch(error => {
                 console.error('Server Error', error);
@@ -67,11 +65,11 @@ export default class NewNote extends Component {
                     </Col>
                     <Col xs="9" className="main">
                         <Row className="ml-3 mt-5 pt-4 mb-4">
-                            <h4 className="text-left heading">Create New Note:</h4>
+                            <h4 className="text-left heading">New User Registration:</h4>
                         </Row>
                         <Row className="mb-4">
                             <Col xs="7" className="ml-3">
-                                <Input placeholder="Note Title" 
+                                <Input placeholder="Username" 
                                 className="note-title-input" 
                                 onChange={this.handleChange}
                                 value={this.state.newNoteTitle} 
@@ -80,7 +78,7 @@ export default class NewNote extends Component {
                         </Row>
                         <Row>
                             <Col xs="12" className="ml-3 pr-5">
-                                <textarea placeholder="Note Content" 
+                                <textarea placeholder="Password: At least 4 characters." 
                                 className="rounded note-content-input" 
                                 onChange={this.handleChange} 
                                 value={this.state.newNoteBody} 
@@ -91,7 +89,7 @@ export default class NewNote extends Component {
                                 type="submit"
                                 className="button mt-4 btn btn-lg btn-block rounded-0" 
                                 onClick={this.submitHandler}> 
-                                Save</button>
+                                Sign Up</button>
                             </Col>
                         </Row>
                     </Col>
