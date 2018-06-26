@@ -48,7 +48,7 @@ export default class Dashboard extends Component {
                         <Link to={{
                             pathname: "/create",
                             state: { userID: this.props.location.state.userID }
-                        }}>
+                        }} className="create-link">
                             <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
                                 + Create New Note
                             </button>
