@@ -10,9 +10,10 @@ export default class EditNote extends Component {
         super(props);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
-            newTitle: this.props.location.state.title.title,
-            newBody: this.props.location.state.body.body,
-            redirect: false
+            newTitle: this.props.location.state.title,
+            newBody: this.props.location.state.body,
+            redirect: false,
+            userID: ''
         };
     }
 
@@ -23,10 +24,11 @@ export default class EditNote extends Component {
     editNote = e => {    
       e.preventDefault(); 
       axios
-        .put(`http://localhost:5000/api/notes/${this.props.location.state.id.id}`, 
+        .put(`http://localhost:5000/api/notes/${this.props.location.state.id}`, 
             { "title": this.state.newTitle, "body": this.state.newBody })
         .then(response => {
             this.setState({
+                userID: this.props.location.state.userID,
                 redirect: true
             })
         })
@@ -36,7 +38,12 @@ export default class EditNote extends Component {
     }
 
   render() {
-    if (this.state.redirect === true) return <Redirect to="/" />;       
+    const { redirect, userID } = this.state
+        if (redirect)
+            return (<Redirect to={{
+                pathname: '/',
+                state: { userID: userID }
+            }} />)      
     return (
     <Container>
         <Row className="border">

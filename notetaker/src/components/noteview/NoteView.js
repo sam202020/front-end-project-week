@@ -10,7 +10,8 @@ export default class NoteView extends Component {
       super(props);
       this.state ={
           modal:false,
-          redirect: false
+          redirect: false,
+          userID: this.props.location.state.userID
       };
       this.toggle = this.toggle.bind(this);
       this.removeNote = this.removeNote.bind(this);
@@ -28,7 +29,7 @@ export default class NoteView extends Component {
       .delete(`http://localhost:5000/api/notes/${this.props.location.state.id}`)
       .then(response => {
         this.setState({
-            redirect: true
+            redirect: true   
         })
       })
       .catch(error => {
@@ -37,10 +38,13 @@ export default class NoteView extends Component {
   }
 
   render() {
-    if (this.state.redirect === true) return <Redirect to="/" />;     
-    const { title } = this.props.location.state;
-    const { body } = this.props.location.state;
-    const { id } = this.props.location.state;
+    const { redirect, userID } = this.state
+    if (redirect)
+        return (<Redirect to={{
+            pathname: '/',
+            state: { userID: userID }
+        }} />)
+    const { title, body, id } = this.props.location.state;
     return (
         <Container>
             <Row className="border">
@@ -63,9 +67,10 @@ export default class NoteView extends Component {
                             <Link to={{
                                     pathname:`/edit/${id}`,
                                     state: {
-                                        id: {id},
-                                        title: {title},
-                                        body: {body}
+                                        id: id,
+                                        title: title,
+                                        body: body,
+                                        userID: userID
                                     }
                                 }} style={{ textDecoration: 'underline', color: 'black' }}>
                                 edit

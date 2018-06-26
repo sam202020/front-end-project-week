@@ -20,7 +20,6 @@ export default class Dashboard extends Component {
         .get(`http://localhost:5000/api/notes/${this.props.location.state.userID}`)
         .then(response => {
             this.setState({ notes: response.data });
-            console.log(this.props.location.state.userID);
         })
         .catch(error => {
             console.error('Server Error', error);
@@ -32,12 +31,13 @@ export default class Dashboard extends Component {
     if (!this.props.location.state) return (
         <div>
             Please Sign In:<br></br>
-            <Link to='/signup'>New User</Link>
+            <Link to='/signup'>New User</Link><br></br>
+            <Link to='/login'>Login</Link>
         </div>
     )
     return (
         <div>
-            <Link to='/signup'>New User</Link>
+            <Link to='/login'>Login To Another Account</Link>
             <Container className="container">
                 <Row className="border">
                     <Col xs="3" className="sidebar">
@@ -66,6 +66,7 @@ export default class Dashboard extends Component {
                             id={note._id}
                             title={note.title}
                             body={note.body}
+                            userID={this.props.location.state.userID}
                              />
                             </Col>
                         )}

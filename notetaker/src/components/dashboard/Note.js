@@ -9,7 +9,8 @@ export default class Note extends Component {
       this.state = {
           id: this.props.id,
           title: this.props.title,
-          body: this.props.body
+          body: this.props.body,
+          userID: this.props.userID
       };
   }
 
@@ -22,7 +23,8 @@ export default class Note extends Component {
                     state: {
                         id: this.state.id,
                         title: this.state.title,
-                        body: this.state.body
+                        body: this.state.body,
+                        userID: this.state.userID
                     }
                  }} style={{ textDecoration: 'none', color: 'black' }}
                 >
