@@ -12,7 +12,8 @@ export default class Login extends Component {
             newNoteTitle: '',
             newNoteBody: '',
             redirect: false,
-            userID: ''
+            userID: '',
+            invalidCreds: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -31,16 +32,17 @@ export default class Login extends Component {
                     userID: res.data._id,
                     redirect: true
                 })
-                console.log(res);
-                console.log(this.state.userID);
             })
             .catch(error => {
                 console.error('Server Error', error);
+                this.setState({
+                    invalidCreds: true
+                })
             });
     }
 
     render() {
-        const { redirect, userID } = this.state
+        const { redirect, userID, invalidCreds } = this.state
         if (redirect)
             return (<Redirect to={{
                 pathname: '/',
@@ -91,6 +93,7 @@ export default class Login extends Component {
                                 onClick={this.submitHandler}> 
                                 Login</button>
                             </Col>
+                            {invalidCreds === true && <h2>Invalid Credentials</h2>}
                         </Row>
                     </Col>
                 </Row>
