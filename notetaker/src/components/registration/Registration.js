@@ -27,11 +27,12 @@ export default class Registration extends Component {
             .post('http://localhost:5000/api/users', 
             { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
             .then(res => {
+                console.log(res);
+                console.log(res.data);
                 this.setState({
                     userID: res.data._id,
                     redirect: true
                 })
-                console.log(res);
                 console.log(this.state.userID);
             })
             .catch(error => {
