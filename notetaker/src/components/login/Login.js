@@ -28,8 +28,14 @@ export default class Login extends Component {
             .post('http://localhost:5000/api/users/login', 
             { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
             .then(res => {
+                if (res.data.token) {
+                    localStorage.setItem('jwt', res.data.token);
+                    console.log(localStorage.getItem('jwt'));
+                  } else {
+                    console.log('problem')
+                  }
                 this.setState({
-                    userID: res.data._id,
+                    userID: res.data.user._id,
                     redirect: true
                 })
             })

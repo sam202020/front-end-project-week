@@ -24,9 +24,15 @@ export default class NoteView extends Component {
   }
 
   removeNote = e => {    
-    e.preventDefault(); 
+    e.preventDefault();
+    const token = localStorage.getItem('jwt');
+    const requestOptions = {
+        headers: {
+            Authorization: token
+        }
+    }; 
     axios
-      .delete(`http://localhost:5000/api/notes/${this.props.location.state.id}`)
+      .delete(`http://localhost:5000/api/notes/${this.props.location.state.id}`, requestOptions)
       .then(response => {
         this.setState({
             redirect: true   

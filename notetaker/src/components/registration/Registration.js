@@ -27,10 +27,15 @@ export default class Registration extends Component {
             .post('http://localhost:5000/api/users', 
             { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
             .then(res => {
-                console.log(res);
                 console.log(res.data);
+                if (res.data.token) {
+                    localStorage.setItem('jwt', res.data.token);
+                    console.log('signing props', this.props);
+                  } else {
+                    console.log('problem')
+                  }
                 this.setState({
-                    userID: res.data._id,
+                    userID: res.data.user._id,
                     redirect: true
                 })
                 console.log(this.state.userID);

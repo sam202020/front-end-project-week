@@ -14,16 +14,24 @@ export default class Dashboard extends Component {
       };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.location.state) {
+        const token = localStorage.getItem('jwt');
+        const requestOptions = {
+            headers: {
+                Authorization: token
+            }
+        };
+        console.log(this.props.location.state);
+        console.log(this.props.location.state.userID);
         axios
-        .get(`http://localhost:5000/api/notes/${this.props.location.state.userID}`)
-        .then(response => {
-            this.setState({ notes: response.data });
-        })
-        .catch(error => {
-            console.error('Server Error', error);
-        });
+            .get(`http://localhost:5000/api/notes/${this.props.location.state.userID}`, requestOptions)
+            .then(response => {
+                this.setState({ notes: response.data });
+            })
+            .catch(error => {
+                console.error('Server Error', error);
+            });
     }
   }
 

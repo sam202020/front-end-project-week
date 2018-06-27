@@ -22,10 +22,18 @@ export default class EditNote extends Component {
     }
 
     editNote = e => {    
-      e.preventDefault(); 
+      e.preventDefault();
+      const token = localStorage.getItem('jwt');
+      const requestOptions = {
+          headers: {
+              Authorization: token
+          }
+      }; 
       axios
         .put(`http://localhost:5000/api/notes/${this.props.location.state.id}`, 
-            { "title": this.state.newTitle, "body": this.state.newBody })
+             { "title": this.state.newTitle, "body": this.state.newBody },
+             requestOptions
+            )
         .then(response => {
             this.setState({
                 userID: this.props.location.state.userID,
@@ -50,10 +58,10 @@ export default class EditNote extends Component {
             <Col xs="3" className="sidebar">
                 <h1 className="mt-3 text-left heading">Lambda Notes</h1>
                 <Link to="/">
-                    <button type="button" class="mt-4 btn btn-lg btn-block rounded-0">View Your Notes</button>
+                    <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">View Your Notes</button>
                 </Link>
                 <Link to="/create">
-                    <button type="button" class="mt-4 btn btn-lg btn-block rounded-0">+ Create New Note</button>
+                    <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">+ Create New Note</button>
                 </Link>
             </Col>
             <Col xs="9" className="main">

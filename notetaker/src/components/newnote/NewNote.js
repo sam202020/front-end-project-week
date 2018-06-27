@@ -24,12 +24,19 @@ export default class NewNote extends Component {
 
     submitHandler = e => {
         e.preventDefault();
+        const token = localStorage.getItem('jwt');
+        const requestOptions = {
+            headers: {
+                Authorization: token
+            }
+        };
         axios
-            .post('http://localhost:5000/api/notes', 
+            .post('http://localhost:5000/api/notes',
                 { "title": this.state.newNoteTitle, 
                   "body": this.state.newNoteBody, 
                   "user": this.props.location.state.userID 
-                })
+                },
+                requestOptions )
             .then(response => {
                 this.setState({
                     userID: this.props.location.state.userID,
