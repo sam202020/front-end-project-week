@@ -57,7 +57,10 @@ export default class EditNote extends Component {
         <Row className="border">
             <Col xs="3" className="sidebar">
                 <h1 className="mt-3 text-left heading">Lambda Notes</h1>
-                <Link to="/">
+                <Link to={{
+                        pathname: '/',
+                        state: { userID: userID }
+                    }}>
                     <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">View Your Notes</button>
                 </Link>
                 <Link to="/create">
