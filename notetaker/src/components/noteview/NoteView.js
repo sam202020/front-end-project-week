@@ -64,7 +64,10 @@ export default class NoteView extends Component {
                             View Your Notes
                         </button>
                     </Link>
-                    <Link to="/create" className="create-link">
+                    <Link to={{
+                            pathname: '/create',
+                            state: { userID: userID },
+                        }} className="create-link">
                         <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
                             + Create New Note
                         </button>
