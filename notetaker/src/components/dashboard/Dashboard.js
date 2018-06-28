@@ -25,7 +25,7 @@ export default class Dashboard extends Component {
         console.log(this.props.location.state);
         console.log(this.props.location.state.userID);
         axios
-            .get(`http://localhost:5000/api/notes/${this.props.location.state.userID}`, requestOptions)
+            .get(`https://note-app-sam.herokuapp.com/api/notes/${this.props.location.state.userID}`, requestOptions)
             .then(response => {
                 this.setState({ notes: response.data });
             })

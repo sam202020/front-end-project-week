@@ -30,7 +30,7 @@ export default class EditNote extends Component {
           }
       }; 
       axios
-        .put(`http://localhost:5000/api/notes/${this.props.location.state.id}`, 
+        .put(`https://note-app-sam.herokuapp.com/api/notes/${this.props.location.state.id}`, 
              { "title": this.state.newTitle, "body": this.state.newBody },
              requestOptions
             )

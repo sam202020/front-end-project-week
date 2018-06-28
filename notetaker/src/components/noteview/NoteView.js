@@ -32,7 +32,7 @@ export default class NoteView extends Component {
         }
     }; 
     axios
-      .delete(`http://localhost:5000/api/notes/${this.props.location.state.id}`, requestOptions)
+      .delete(`https://note-app-sam.herokuapp.com/api/notes/${this.props.location.state.id}`, requestOptions)
       .then(response => {
         this.setState({
             redirect: true   

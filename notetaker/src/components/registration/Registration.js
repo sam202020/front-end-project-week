@@ -24,7 +24,7 @@ export default class Registration extends Component {
     submitHandler = e => {
         e.preventDefault();
         axios
-            .post('http://localhost:5000/api/users', 
+            .post('https://note-app-sam.herokuapp.com/api/users', 
             { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
             .then(res => {
                 console.log(res.data);

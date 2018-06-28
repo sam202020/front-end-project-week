@@ -31,7 +31,7 @@ export default class NewNote extends Component {
             }
         };
         axios
-            .post('http://localhost:5000/api/notes',
+            .post('https://note-app-sam.herokuapp.com/api/notes',
                 { "title": this.state.newNoteTitle, 
                   "body": this.state.newNoteBody, 
                   "user": this.props.location.state.userID 

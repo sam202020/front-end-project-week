@@ -25,7 +25,7 @@ export default class Login extends Component {
     submitHandler = e => {
         e.preventDefault();
         axios
-            .post('http://localhost:5000/api/users/login', 
+            .post('https://note-app-sam.herokuapp.com/api/users/login', 
             { "username": this.state.newNoteTitle, "password": this.state.newNoteBody })
             .then(res => {
                 if (res.data.token) {
