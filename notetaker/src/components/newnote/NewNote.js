@@ -13,7 +13,7 @@ export default class NewNote extends Component {
             newNoteTitle: '',
             newNoteBody: '',
             redirect: false,
-            userID: ''
+            userID: this.props.location.state.userID
         };
         this.handleChange = this.handleChange.bind(this);
     }

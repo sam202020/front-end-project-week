@@ -13,7 +13,7 @@ export default class EditNote extends Component {
             newTitle: this.props.location.state.title,
             newBody: this.props.location.state.body,
             redirect: false,
-            userID: ''
+            userID: this.props.location.state.userID
         };
     }
 
