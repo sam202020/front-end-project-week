@@ -85,12 +85,13 @@ export default class Login extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs="12" className="ml-3 pr-5">
-                                <textarea placeholder="Password: At least 4 characters." 
-                                className="rounded note-content-input" 
+                            <Col xs="8" className="ml-3 pr-5">
+                                <Input placeholder="Password: At least 4 characters." 
+                                className="rounded note-title-input" 
                                 onChange={this.handleChange} 
                                 value={this.state.newNoteBody} 
-                                name="newNoteBody"></textarea>
+                                name="newNoteBody"
+                                type="password"/>
                             </Col>
                             <Col xs="4" className="ml-3">
                                 <button
