@@ -2,6 +2,7 @@
   "name": "notetaker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://zealous-shaw-5c73f9.netlify.com/",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
