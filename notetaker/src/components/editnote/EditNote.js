@@ -63,7 +63,10 @@ export default class EditNote extends Component {
                     }}>
                     <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">View Your Notes</button>
                 </Link>
-                <Link to="/create">
+                <Link to={{
+                        pathname: '/create',
+                        state: { userID: userID }
+                    }}>
                     <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">+ Create New Note</button>
                 </Link>
             </Col>
