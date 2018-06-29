@@ -15,15 +15,13 @@ export default class Dashboard extends Component {
   }
 
   componentWillMount() {
-    if (this.props.location.state) {
+    if (this.props.location.state && localStorage.getItem('jwt')) {
         const token = localStorage.getItem('jwt');
         const requestOptions = {
             headers: {
                 Authorization: token
             }
         };
-        console.log(this.props.location.state);
-        console.log(this.props.location.state.userID);
         axios
             .get(`https://note-app-sam.herokuapp.com/api/notes/${this.props.location.state.userID}`, requestOptions)
             .then(response => {
@@ -36,16 +34,25 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    if (!this.props.location.state) return (
+    if (!this.props.location.state || !localStorage.getItem('jwt')) return (
         <div>
-            Please Sign In:<br></br>
-            <Link to='/signup'>New User</Link><br></br>
-            <Link to='/login'>Login</Link>
+            <Container className="container">
+                <Row className="border">
+                    <Col xs="3" className="sidebar">
+                        <h1 className="mt-3 text-left heading">Lambda Notes</h1>
+                    </Col>
+                    <Col xs="9" className="main mt-3 pt-4 mb-4">
+                        <h4 className="text-center heading mb-5">Please Login or Register to view your notes:</h4>
+                        <Link to='/login'><h4>Login</h4></Link><br></br><br></br>
+                        <Link to='/signup'><h4>New User</h4></Link>
+                    </Col>  
+                </Row>
+            </Container>
         </div>
     )
     return (
         <div>
-            <Link to='/login'>Login To Another Account</Link><br></br>
+            <Link to='/login'>Logout</Link><br></br>
             <Link to='/signup'>New User</Link>
             <Container className="container">
                 <Row className="border">

@@ -22,6 +22,10 @@ export default class Login extends Component {
         this.setState({ [e.target.name] : e.target.value });
     }
 
+    componentDidMount() {
+        localStorage.clear();
+    }
+
     submitHandler = e => {
         e.preventDefault();
         axios
@@ -30,7 +34,6 @@ export default class Login extends Component {
             .then(res => {
                 if (res.data.token) {
                     localStorage.setItem('jwt', res.data.token);
-                    console.log(localStorage.getItem('jwt'));
                   } else {
                     console.log('problem')
                   }
@@ -40,7 +43,6 @@ export default class Login extends Component {
                 })
             })
             .catch(error => {
-                console.error('Server Error', error);
                 this.setState({
                     invalidCreds: true
                 })
@@ -60,16 +62,6 @@ export default class Login extends Component {
                 <Row className="border">
                     <Col xs="3" className="sidebar">
                         <h1 className="mt-3 text-left heading">Lambda Notes</h1>
-                        <Link to="/">
-                            <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
-                                View Your Notes
-                            </button>
-                        </Link>
-                        <Link to="/">
-                            <button type="button" className="mt-4 btn btn-lg btn-block rounded-0">
-                                + Create New Note
-                            </button>
-                        </Link>
                     </Col>
                     <Col xs="9" className="main">
                         <Row className="ml-3 mt-5 pt-4 mb-4">
