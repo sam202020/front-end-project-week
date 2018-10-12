@@ -12,6 +12,7 @@ export default class Registration extends Component {
       newNoteTitle: "",
       newNoteBody: "",
       email: '',
+      invalidEmail:false,
       redirect: false,
       userID: ""
     };
@@ -22,32 +23,47 @@ export default class Registration extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  checkForValidEmailAddress = () => {
+    const { email } = this.state;
+    const isValidEmail = this.validateEmail(email);
+    if (isValidEmail === true) return true;
+    return false;
+  }
+
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
   submitHandler = e => {
     e.preventDefault();
-    axios
-      .post("https://note-app-sam.herokuapp.com/api/users", {
-        username: this.state.newNoteTitle,
-        password: this.state.newNoteBody,
-        emailAddress: this.state.email
-      })
-      .then(res => {
-        if (res.data.token) {
-          localStorage.setItem("jwt", res.data.token);
-        } else {
-          // TODO: ERROR MESSAGE
-        }
-        this.setState({
-          userID: res.data.user._id,
-          redirect: true
-        });
-      })
-      .catch(error => {
-        console.error("Server Error", error); // TODO: ERROR MESSAGE in browser
-      });
+    if (this.checkForValidEmailAddress() === false) {
+        this.setState({invalidEmail: true, email: ''})
+    }
+    // axios
+    //   .post("https://note-app-sam.herokuapp.com/api/users", {
+    //     username: this.state.newNoteTitle,
+    //     password: this.state.newNoteBody,
+    //     emailAddress: this.state.email
+    //   })
+    //   .then(res => {
+    //     if (res.data.token) {
+    //       localStorage.setItem("jwt", res.data.token);
+    //     } else {
+    //       // TODO: ERROR MESSAGE
+    //     }
+    //     this.setState({
+    //       userID: res.data.user._id,
+    //       redirect: true
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.error("Server Error", error); // TODO: ERROR MESSAGE in browser
+    //   });
   };
 
   render() {
-    const { redirect, userID } = this.state;
+    const { redirect, userID, invalidEmail } = this.state;
     if (redirect)
       return (
         <Redirect
@@ -108,6 +124,15 @@ export default class Registration extends Component {
                     Sign Up
                   </button>
                 </Col>
+              </Row>
+              <Row mt="5">
+
+
+                  <Col className='mt-5'>
+                  
+                  
+                  
+                  {invalidEmail && <h1 style={{color:'red'}}>Invalid Email Address, Please Re-enter.</h1>}</Col>
               </Row>
             </Col>
           </Row>
