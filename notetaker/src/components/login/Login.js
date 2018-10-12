@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Input } from 'reactstrap';
+import { Container, Row, Col, Input, Button } from 'reactstrap';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 
@@ -12,13 +12,18 @@ export default class Login extends Component {
             newNoteBody: '',
             redirect: false,
             userID: '',
-            invalidCreds: false
+            invalidCreds: false,
+            forgotPassword: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange = e => {
-        this.setState({ [e.target.name] : e.target.value });
+        this.setState({ [e.target.name] : e.target.value }, () => console.log(this.state));
+    }
+
+    handleChange = e => {
+        this.setState({ forgotPassword : true }, () => console.log(this.state));
     }
 
     componentDidMount() {
@@ -59,13 +64,13 @@ export default class Login extends Component {
         <div>
             <Container className="container">
                 <Row className="border">
-                    <Col xs="3" className="sidebar">
+                    <Col lg="3" className="sidebar">
                         <h1 className="mt-3 text-left heading">Lambda Notes</h1>
                     </Col>
-                    <Col xs="9" className="main">
-                        <Row className="ml-3 mt-5 pt-4 mb-4">
+                    <Col lg="9" className="mt-5 pt-4 mb-4">
+                        
                             <h4 className="text-left heading">Login to view your notes:</h4>
-                        </Row>
+                       
                         <Row className="mb-4">
                             <Col xs="7" className="ml-3">
                                 <Input placeholder="Username" 
@@ -92,6 +97,14 @@ export default class Login extends Component {
                                 Login</button>
                             </Col>
                             {invalidCreds === true && <h2>Invalid Credentials</h2>}
+                        </Row>
+                        <Row>
+                            <Col xs="8" className="ml-3 pr-5">
+                                <Button
+                                onChange={this.handleChangeButton} 
+                                value={true}
+                                > I Forgot My Password</Button>
+                            </Col>
                         </Row>
                     </Col>
                 </Row>
