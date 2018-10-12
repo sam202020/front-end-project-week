@@ -11,6 +11,7 @@ export default class Registration extends Component {
     this.state = {
       newNoteTitle: "",
       newNoteBody: "",
+      email: '',
       redirect: false,
       userID: ""
     };
@@ -26,7 +27,8 @@ export default class Registration extends Component {
     axios
       .post("https://note-app-sam.herokuapp.com/api/users", {
         username: this.state.newNoteTitle,
-        password: this.state.newNoteBody
+        password: this.state.newNoteBody,
+        emailAddress: this.state.email
       })
       .then(res => {
         if (res.data.token) {
@@ -78,6 +80,15 @@ export default class Registration extends Component {
                 </Col>
               </Row>
               <Row>
+              <Col xs="8" className="ml-3 mb-4 pr-5">
+                  <Input
+                    placeholder="Email Address"
+                    className="rounded note-title-input"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                    name="email"
+                  />
+                </Col>
                 <Col xs="8" className="ml-3 pr-5">
                   <Input
                     placeholder="Password: At least 4 characters."
